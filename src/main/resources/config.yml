@@ -1,0 +1,87 @@
+settings:
+  admin-permission: "chunkremover.admin"
+  delay-seconds: 10
+
+gameplay:
+  max-hoppers-per-chunk: 1
+
+performance:
+  ticks-per-layer: 2
+  max-blocks-per-tick: 500
+
+economy:
+  use-custom-prices: true
+  prices:
+    DIAMOND: 50.0
+    DIAMOND_ORE: 50.0
+    DEEPSLATE_DIAMOND_ORE: 50.0
+    EMERALD: 30.0
+    GOLD_INGOT: 20.0
+    RAW_GOLD: 15.0
+    IRON_INGOT: 10.0
+    RAW_IRON: 8.0
+    COPPER_INGOT: 5.0
+    COAL: 2.0
+    ANCIENT_DEBRIS: 200.0
+    DEFAULT_PRICE: 1.0
+
+protected-blocks:
+  - BEDROCK
+  - SPAWNER
+  - END_PORTAL_FRAME
+  - END_PORTAL
+  - NETHER_PORTAL
+
+messages:
+  no-permission: "&cVocê precisa ser administrador para gerar/pegar estes itens!"
+  reload-success: "&aConfigurações e dados do ChunkRemover recarregados com sucesso!"
+  give-success: "&aVocê deu &e%amount%x %type% &apara o jogador &e%player%&a!"
+  give-received: "&aVocê recebeu &e%amount%x %type%&a!"
+  invalid-player: "&cJogador não encontrado ou offline!"
+  invalid-type: "&cTipo inválido! Use: 1, 4, 8 ou funil"
+  countdown-title: "&c&lREMOVEDOR ATIVADO"
+  countdown-subtitle: "&eLimpando chunk em &c%seconds%s&e! Afaste-se!"
+  success: "&aProcesso de remoção por camadas concluído! Os minérios encontrados foram enviados para o seu /minerios."
+  ores-gui-title: "&8Seus Minérios Coletados"
+  no-ores-to-claim: "&cVocê não possui minérios para resgatar ou não utilizou um removedor de chunk recente."
+  must-be-sneaking: "&c[!] Você precisa estar &e&lAGACHADO (SHIFT) &cpara ativar este item!"
+  claim-protected: "&c[!] Ação cancelada: A área selecionada contém uma região ou claim protegido!"
+  vault-expired-alert: "&c[!] O seu tempo de 24h expirou e seus minérios coletados foram deletados!"
+  vault-reminder-join: "&e&l[!] Lembrete:&e Você possui minérios guardados! Use &c/minerios&e para retirar."
+  vault-reminder-periodic: "&e[Lembrete] Você tem minérios pendentes no &c/minerios&e! Tempo restante: &c%time%"
+  
+hopper:
+  max-reached: "&c[!] O limite máximo de Funis de Chunk (%max%) nesta chunk já foi atingido!"
+  placed-success: "&a[!] Funil de Chunk colocado com sucesso! Clique com o botão direito nele para gerenciar."
+  linked-success: "&a[!] Funil de Chunk vinculado a este baú com sucesso!"
+  removed: "&e[!] Funil de Chunk removido da chunk."
+  not-owner: "&c[!] Você não tem permissão para quebrar o Funil de Chunk nesta área protegida!"
+  filter-gui-title: "&8Filtro do Funil de Chunk"
+
+items:
+  chunk_1:
+    name: "&c&lRemovedor de 1 Chunk"
+    material: "TNT"
+    lore:
+      - "&7Coloque este bloco para"
+      - "&7apagar 1 chunk inteiro!"
+      - "&eItem Especial"
+    radius-chunks: 1
+
+  chunk_4:
+    name: "&c&lRemovedor de 4 Chunks"
+    material: "TNT"
+    lore:
+      - "&7Coloque este bloco para"
+      - "&7apagar uma área de 4 chunks!"
+      - "&eItem Especial"
+    radius-chunks: 2
+
+  chunk_8:
+    name: "&c&lRemovedor de 8 Chunks"
+    material: "TNT"
+    lore:
+      - "&7Coloque este bloco para"
+      - "&7apagar uma grande área de 8 chunks!"
+      - "&eItem Especial"
+    radius-chunks: 3
