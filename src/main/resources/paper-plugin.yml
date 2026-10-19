@@ -1,0 +1,30 @@
+name: ChunkRemover
+version: '1.0'
+main: com.seunome.chunkremover.ChunkRemover
+api-version: '1.21'
+author: Admin
+description: Plugin completo de Remoção de Chunks e Funil de Chunk com Auto-Sell, SQLite e Camadas.
+
+dependencies:
+  server:
+    Vault:
+      load: BEFORE
+      required: false
+    EconomyShopGUI:
+      load: BEFORE
+      required: false
+    ShopGUIPlus:
+      load: BEFORE
+      required: false
+    GriefPrevention:
+      load: BEFORE
+      required: false
+    WorldGuard:
+      load: BEFORE
+      required: false
+    Towny:
+      load: BEFORE
+      required: false
+    Lands:
+      load: BEFORE
+      required: false
