@@ -25,7 +25,6 @@ dependencies {
     compileOnly 'com.github.brcdev-minecraft:shopguiplus-api:3.0.0'
     compileOnly 'com.github.TechFortress:GriefPrevention:16.18.2'
     compileOnly 'com.sk89q.worldguard:worldguard-bukkit:7.0.9'
-    compileOnly 'com.github.TownyAdvanced:Towny:0.100.0.0'
 }
 
 java {
