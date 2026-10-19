@@ -1,21 +1,8 @@
 package com.seunome.chunkremover;
 
 import net.milkbowl.vault.economy.Economy;
-import me.gysta.economyshopgui.api.EconomyShopGUIHook;
-import net.brcdev.shopgui.ShopGUIPlusApi;
-
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
-import com.sk89q.worldguard.WorldGuard;
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import com.sk89q.worldguard.protection.flags.Flags;
-import com.sk89q.worldguard.protection.regions.RegionContainer;
-import com.sk89q.worldguard.protection.regions.RegionQuery;
-import me.angeschossen.lands.api.LandsIntegration;
-import me.angeschossen.lands.api.land.Area;
-import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.object.TownyPermission;
-import com.palmergames.bukkit.towny.utils.PlayerCacheUtil;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -74,12 +61,7 @@ public final class ChunkRemover extends JavaPlugin implements Listener, CommandE
     private static final long EXPIRATION_TIME_MS = 24 * 60 * 60 * 1000L;
 
     private static Economy econ = null;
-    private boolean economyShopGUIEnabled = false;
-    private boolean shopGUIPlusEnabled = false;
     private boolean griefPreventionEnabled = false;
-    private boolean worldGuardEnabled = false;
-    private boolean townyEnabled = false;
-    private LandsIntegration landsIntegration;
 
     @Override
     public void onEnable() {
@@ -90,7 +72,7 @@ public final class ChunkRemover extends JavaPlugin implements Listener, CommandE
         if (getCommand("minerios") != null) getCommand("minerios").setExecutor(this);
 
         setupVaultEconomy();
-        setupProtectionAndShopHooks();
+        setupProtectionHooks();
         initDatabase();
         loadDatabaseData();
         startReminderTask();
@@ -226,13 +208,8 @@ public final class ChunkRemover extends JavaPlugin implements Listener, CommandE
         return econ != null;
     }
 
-    private void setupProtectionAndShopHooks() {
-        if (Bukkit.getPluginManager().getPlugin("EconomyShopGUI") != null) economyShopGUIEnabled = true;
-        if (Bukkit.getPluginManager().getPlugin("ShopGUIPlus") != null) shopGUIPlusEnabled = true;
+    private void setupProtectionHooks() {
         if (Bukkit.getPluginManager().getPlugin("GriefPrevention") != null) griefPreventionEnabled = true;
-        if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null) worldGuardEnabled = true;
-        if (Bukkit.getPluginManager().getPlugin("Towny") != null) townyEnabled = true;
-        if (Bukkit.getPluginManager().getPlugin("Lands") != null) landsIntegration = LandsIntegration.of(this);
     }
 
     private void startReminderTask() {
@@ -905,29 +882,10 @@ public final class ChunkRemover extends JavaPlugin implements Listener, CommandE
     }
 
     private double getItemSellPrice(ItemStack item) {
-        boolean useCustom = getConfig().getBoolean("economy.use-custom-prices", true);
-
-        if (!useCustom) {
-            if (economyShopGUIEnabled) {
-                try {
-                    double price = EconomyShopGUIHook.getItemSellPrice(item);
-                    if (price > 0) return price;
-                } catch (Exception ignored) {}
-            }
-
-            if (shopGUIPlusEnabled) {
-                try {
-                    double price = ShopGUIPlusApi.getItemSellPrice(item);
-                    if (price > 0) return price;
-                } catch (Exception ignored) {}
-            }
-        }
-
         String matName = item.getType().name();
         if (getConfig().contains("economy.prices." + matName)) {
             return getConfig().getDouble("economy.prices." + matName);
         }
-
         return getConfig().getDouble("economy.prices.DEFAULT_PRICE", 1.0);
     }
 
@@ -975,26 +933,6 @@ public final class ChunkRemover extends JavaPlugin implements Listener, CommandE
                 if (claim.allowBuild(player, Material.TNT) != null) return true;
             }
         }
-
-        if (worldGuardEnabled) {
-            RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
-            RegionQuery query = container.createQuery();
-            com.sk89q.worldedit.util.Location wgLoc = com.sk89q.worldedit.bukkit.BukkitAdapter.adapt(loc);
-            if (!query.testState(wgLoc, WorldGuardPlugin.inst().wrapPlayer(player), Flags.BUILD)) return true;
-        }
-
-        if (landsIntegration != null) {
-            Area area = landsIntegration.getArea(loc);
-            if (area != null && !area.getLand().getOwnerUID().equals(player.getUniqueId())) {
-                if (!area.hasRoleFlag(player, me.angeschossen.lands.api.flags.type.Flags.BLOCK_BREAK)) return true;
-            }
-        }
-
-        if (townyEnabled) {
-            boolean canBuild = PlayerCacheUtil.hasAccessInTown(player, loc, Material.TNT, TownyPermission.ActionType.DESTROY);
-            if (!canBuild && !TownyAPI.getInstance().isWilderness(loc)) return true;
-        }
-
         return false;
     }
 
