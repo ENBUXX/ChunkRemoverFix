@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.seunome.chunkremover'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://repo.papermc.io/repository/maven-public/' }
+    maven { url = 'https://maven.enginehub.org/repo/' }
+    maven { url = 'https://jitpack.io' }
+}
+
+dependencies {
+    compileOnly 'io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT'
+    
+    // Banco de Dados SQLite
+    implementation 'org.xerial:sqlite-jdbc:3.45.1.0'
+
+    // APIs de Economia e Proteção
+    compileOnly 'com.github.MilkBowl:VaultAPI:1.7'
+    compileOnly 'com.github.GraveMc:EconomyShopGUI-API:1.7.1'
+    compileOnly 'com.github.brcdev-minecraft:shopguiplus-api:3.0.0'
+    compileOnly 'com.github.TechFortress:GriefPrevention:16.18.2'
+    compileOnly 'com.sk89q.worldguard:worldguard-bukkit:7.0.9'
+    compileOnly 'com.github.TownyAdvanced:Towny:0.100.0.0'
+    compileOnly 'me.anglesharp:LandsAPI:6.2.0'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
