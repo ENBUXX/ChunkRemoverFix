@@ -26,7 +26,6 @@ dependencies {
     compileOnly 'com.github.TechFortress:GriefPrevention:16.18.2'
     compileOnly 'com.sk89q.worldguard:worldguard-bukkit:7.0.9'
     compileOnly 'com.github.TownyAdvanced:Towny:0.100.0.0'
-    compileOnly 'me.anglesharp:LandsAPI:6.2.0'
 }
 
 java {
